@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: general-store-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: general-store-frontend
+  template:
+    metadata:
+      labels:
+        app: general-store-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: <your-frontend-image>
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: general-store-frontend
+spec:
+  selector:
+    app: general-store-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
